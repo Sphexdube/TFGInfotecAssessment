@@ -38,8 +38,7 @@ namespace TFGInfotecApi.Managers
 		/// <inheritdoc cref="IDrinkManager.GetAllDrinksAsync"/>
 		public async Task<IEnumerable<Drink>> GetAllDrinksAsync(CancellationToken cancellationToken)
 		{
-			var response = await _dbContext.Drinks.ToListAsync(cancellationToken);
-			return response;
+			return await _dbContext.Drinks.ToListAsync(cancellationToken);
 		}
 
 		/// <inheritdoc cref="IDrinkManager.GetDrinkByIdAsync"/>

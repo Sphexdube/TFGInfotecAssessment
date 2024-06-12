@@ -5,7 +5,6 @@ namespace TFGInfotecApi.Models
 {
 	public class Drink : IMenuItem
 	{
-		[Key]
 		public int Id { get; set; }
 
 		[Required]
