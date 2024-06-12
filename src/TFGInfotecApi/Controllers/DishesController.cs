@@ -10,7 +10,7 @@ namespace TFGInfotecApi.Controllers
 	/// Controller for managing dishes.
 	/// </summary>
 	[ApiController]
-	[Route("dishes")]
+	[Route("api/dishes")]
 	public class DishesController : ControllerBase
 	{
 		private readonly IDishManager _dishManager;
@@ -25,67 +25,60 @@ namespace TFGInfotecApi.Controllers
 		/// </summary>
 		/// <returns>A list of dish names.</returns>
 		[HttpGet]
-		[Route("products")]
 		public async Task<IActionResult> GetAllDishesAsync(CancellationToken cancellationToken)
 		{
 			var result = await _dishManager.GetAllDishesAsync(cancellationToken);
-
 			return Ok(result);
 		}
 
-		// <summary>
+		/// <summary>
 		/// Gets a specific dish by Id.
 		/// </summary>
-		/// <param name="productId">The ID of the dish.</param>
+		/// <param name="dishId">The ID of the dish.</param>
 		/// <returns>The name of the dish.</returns>
-		[HttpGet]
-		[Route("product/{productId:int}")]
+		[HttpGet("{dishId:int}")]
 		public async Task<ActionResult<Dish>> GetDishByIdAsync(
-			[FromRoute][Required] int productId,
+			[FromRoute][Required] int dishId,
 			CancellationToken cancellationToken)
 		{
-			var result = await _dishManager.GetDishByIdAsync(productId, cancellationToken);
-
+			var result = await _dishManager.GetDishByIdAsync(dishId, cancellationToken);
 			if (result == null)
 			{
 				return NotFound();
 			}
-
 			return Ok(result);
 		}
 
 		/// <summary>
 		/// Creates a new dish.
 		/// </summary>
-		/// <param name="request">The dish to create.</param>
+		/// <param name="dish">The dish to create.</param>
 		[HttpPost]
-		[Route("products")]
 		public async Task<IActionResult> CreateDishAsync(
 			[FromBody][BindRequired] Dish dish,
 			CancellationToken cancellationToken)
 		{
 			var createdDish = await _dishManager.CreateDishAsync(dish, cancellationToken);
-			return CreatedAtAction(nameof(GetDishByIdAsync), new { productId = createdDish.Id }, createdDish);
+			return CreatedAtAction(nameof(GetDishByIdAsync), new { dishId = createdDish.Id }, createdDish);
 		}
 
 		/// <summary>
 		/// Updates an existing dish.
 		/// </summary>
-		/// <param name="productId">The ID of the dish to delete.</param>
-		/// <param name="request">The updated dish.</param>
-		[HttpPut("product/{productId:int}")]
-		public async Task<IActionResult> UpdateDrinkAsync(
-			[FromRoute][Required] int productId,
+		/// <param name="dishId">The ID of the dish to update.</param>
+		/// <param name="dish">The updated dish.</param>
+		[HttpPut("{dishId:int}")]
+		public async Task<IActionResult> UpdateDishAsync(
+			[FromRoute][Required] int dishId,
 			[FromBody][BindRequired] Dish dish,
 			CancellationToken cancellationToken)
 		{
-			if (productId != dish.Id)
+			if (dishId != dish.Id)
 			{
-				return BadRequest("ProductId in URL does not match the Id in the request body.");
+				return BadRequest("DishId in URL does not match the Id in the request body.");
 			}
 
 			var updatedDish = await _dishManager.UpdateDishAsync(dish, cancellationToken);
-
 			if (updatedDish == null)
 			{
 				return NotFound();
@@ -97,14 +90,13 @@ namespace TFGInfotecApi.Controllers
 		/// <summary>
 		/// Deletes a specific dish by ID.
 		/// </summary>
-		/// <param name="productId">The ID of the dish to delete.</param>
-		[HttpDelete("product/{productId:int}")]
+		/// <param name="dishId">The ID of the dish to delete.</param>
+		[HttpDelete("{dishId:int}")]
 		public async Task<IActionResult> DeleteDishAsync(
-			[FromRoute][Required] int productId,
+			[FromRoute][Required] int dishId,
 			CancellationToken cancellationToken)
 		{
-			var result = await _dishManager.DeleteDishAsync(productId, cancellationToken);
-
+			var result = await _dishManager.DeleteDishAsync(dishId, cancellationToken);
 			if (!result)
 			{
 				return NotFound();

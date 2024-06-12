@@ -9,96 +9,119 @@ namespace TFGInfotecApi.Controllers
 	/// Controller for customer interactions with dishes and drinks.
 	/// </summary>
 	[ApiController]
-	[Route("customer")]
+	[Route("api/customer")]
 	public class CustomerController : Controller
 	{
 		private readonly CustomerManager _customerManager;
+		private readonly IDrinkManager _drinkManager;
+		private readonly IDishManager _dishManager;
 
-		public CustomerController(CustomerManager customerManager)
+		public CustomerController(CustomerManager customerManager, IDrinkManager drinkManager, IDishManager dishManager)
 		{
 			_customerManager = customerManager;
+			_drinkManager = drinkManager;
+			_dishManager = dishManager;
 		}
 
 		/// <summary>
-		/// Searches for dishes and drinks by name or description.
+		/// Searches for drinks by name or description.
 		/// </summary>
 		/// <param name="query">The search term.</param>
-		/// <returns>A list of matching dishes and drinks.</returns>
+		/// <returns>A list of matching drinks.</returns>
 		[HttpGet]
-		[Route("products/search")]
-		public async Task<IActionResult> SearchItems([FromQuery] string query, string type)
+		[Route("drinks/search")]
+		public async Task<IActionResult> SearchDrinks([FromQuery] string query)
 		{
-			if (type == "drink" || type == "dish")
-			{
-				var items = await _customerManager.SearchItems<IMenuItem>(query, type);
-				return Ok(items);
-			}
-			else
-			{
-				return BadRequest("Invalid type specified. Use 'drink' or 'dish'.");
-			}
+			var drinks = await _customerManager.SearchItems<IMenuItem>(query, "drink");
+			return Ok(drinks);
 		}
 
-		// <summary>
+		/// <summary>
+		/// Searches for dishes by name or description.
+		/// </summary>
+		/// <param name="query">The search term.</param>
+		/// <returns>A list of matching dishes.</returns>
+		[HttpGet]
+		[Route("dishes/search")]
+		public async Task<IActionResult> SearchDishes([FromQuery] string query)
+		{
+			var dishes = await _customerManager.SearchItems<IMenuItem>(query, "dishes");
+			return Ok(dishes);
+		}
+
+		/// <summary>
 		/// Gets the details of a specific drink by Id.
 		/// </summary>
 		/// <param name="id">The ID of the drink.</param>
 		/// <returns>The details of the drink.</returns>
 		[HttpGet]
-		[Route("drink/{productId:int}")]
-		public string GetDrink([FromRoute][Required] int productId)
+		[Route("drinks/{id:int}")]
+		public async Task<IActionResult> GetDrinkById([FromRoute][Required] int id, CancellationToken cancellationToken)
 		{
-			return "value";
+			var drink = await _drinkManager.GetDrinkByIdAsync(id, cancellationToken);
+			if (drink == null)
+			{
+				return NotFound();
+			}
+			return Ok(drink);
 		}
 
-		// <summary>
+		/// <summary>
 		/// Gets the details of a specific dish by Id.
 		/// </summary>
 		/// <param name="id">The ID of the dish.</param>
 		/// <returns>The details of the dish.</returns>
 		[HttpGet]
-		[Route("product/{productId:int}")]
-		public async Task<IActionResult> GetItem([FromRoute][Required] int productId, string type)
+		[Route("dishes/{id:int}")]
+		public async Task<IActionResult> GetDishById([FromRoute][Required] int id, CancellationToken cancellationToken)
 		{
-			if (type == "drink" || type == "dish")
+			var dish = await _dishManager.GetDishByIdAsync(id, cancellationToken);
+			if (dish == null)
 			{
-				var item = await _customerManager.GetItemById<IMenuItem>(productId, type);
-				if (item == null)
-				{
-					return NotFound();
-				}
-				return Ok(item);
+				return NotFound();
+			}
+			return Ok(dish);
+		}
+
+		/// <summary>
+		/// Rates a specific drink by Id.
+		/// </summary>
+		/// <param name="id">The ID of the drink.</param>
+		/// <param name="rating">The rating value (1 to 5).</param>
+		/// <returns>An IActionResult.</returns>
+		[HttpPost]
+		[Route("drinks/rate/{drinkId:int}")]
+		public async Task<IActionResult> RateDrink([FromRoute][Required] int drinkId, [FromBody][Range(1, 5)] int rating)
+		{
+			var success = await _customerManager.UpdateItemRating<IMenuItem>(drinkId, rating, "drinks");
+			if (success)
+			{
+				return NoContent();
 			}
 			else
 			{
-				return BadRequest("Invalid type specified. Use 'drink' or 'dish'.");
+				return NotFound();
 			}
 		}
 
 		/// <summary>
-		/// Rates a specific dish or drink by Id.
+		/// Rates a specific dish by Id.
 		/// </summary>
-		/// <param name="id">The ID of the dish or drink.</param>
+		/// <param name="id">The ID of the dish.</param>
 		/// <param name="rating">The rating value (1 to 5).</param>
 		/// <returns>An IActionResult.</returns>
-		[HttpPost("rate/product/{productId:int}")]
-		public async Task<IActionResult> RateDishOrDink([FromRoute][Required] int productId, string type, [FromBody][Range(1, 5)] int rating)
+		[HttpPost]
+		[Route("dishes/rate/{dishId:int}")]
+		public async Task<IActionResult> RateDish([FromRoute][Required] int dishId, [FromBody][Range(1, 5)] int rating)
 		{
-			if (type == "drink" || type == "dish")
+			var success = await _customerManager.UpdateItemRating<IMenuItem>(dishId, rating, "dish");
+			if (success)
 			{
-				var success = await _customerManager.UpdateItemRating<IMenuItem>(productId, rating, type);
-				if (success)
-				{
-					return NoContent();
-				}
-				else
-				{
-					return NotFound();
-				}
+				return NoContent();
 			}
 			else
 			{
-				return BadRequest("Invalid type specified. Use 'drink' or 'dish'.");
+				return NotFound();
 			}
 		}
 	}
