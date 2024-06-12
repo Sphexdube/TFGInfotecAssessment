@@ -1,0 +1,33 @@
+version: '3.4'
+
+networks:
+  tfginfotecapp:
+
+services:
+  tfginfotecapi:
+    container_name: tfginfotecapi
+    image: ${DOCKER_REGISTRY-}tfginfotecmenuapi
+    build:
+      context: .
+      dockerfile: src/TFGInfotecApi/Dockerfile
+    ports:
+      - "8001:80"
+    depends_on:
+      - db
+    environment:
+      - DB_HOST=tfginfotecdb
+      - DB_NAME=Cantina
+      - DB_SA_PASSWORD=password123$
+    networks:
+      - tfginfotecapp
+
+  db:
+    container_name: tfginfotecdb
+    ports:
+      - "8002:1433"
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=password123$
+    networks:
+      - tfginfotecapp
