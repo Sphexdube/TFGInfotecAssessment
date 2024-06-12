@@ -1,4 +1,4 @@
-﻿qnamespace TFGInfotecAbstractions.Interfaces
+﻿namespace TFGInfotecAbstractions.Interfaces
 {
 	public interface ICustomerManager
 	{
