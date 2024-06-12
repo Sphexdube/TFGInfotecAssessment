@@ -11,6 +11,7 @@ namespace TFGInfotecApi.Extensions
 		{
 			services.AddScoped<IDishManager, DishManager>();
 			services.AddScoped<IDrinkManager, DrinkManager>();
+			services.AddScoped<IUserManager, UserManager>();
 		}
 
 		public static void AddDatabaseContext(this IServiceCollection services)
