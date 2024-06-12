@@ -37,9 +37,7 @@ namespace TFGInfotecApi.Controllers
 		/// <param name="dishId">The ID of the dish.</param>
 		/// <returns>The name of the dish.</returns>
 		[HttpGet("{dishId:int}")]
-		public async Task<ActionResult<Dish>> GetDishByIdAsync(
-			[FromRoute][Required] int dishId,
-			CancellationToken cancellationToken)
+		public async Task<ActionResult<Dish>> GetDishByIdAsync([FromRoute][Required] int dishId, CancellationToken cancellationToken)
 		{
 			var result = await _dishManager.GetDishByIdAsync(dishId, cancellationToken);
 			if (result == null)
@@ -54,9 +52,7 @@ namespace TFGInfotecApi.Controllers
 		/// </summary>
 		/// <param name="dish">The dish to create.</param>
 		[HttpPost]
-		public async Task<IActionResult> CreateDishAsync(
-			[FromBody][BindRequired] Dish dish,
-			CancellationToken cancellationToken)
+		public async Task<IActionResult> CreateDishAsync([FromBody][BindRequired] Dish dish, CancellationToken cancellationToken)
 		{
 			var createdDish = await _dishManager.CreateDishAsync(dish, cancellationToken);
 			return CreatedAtAction(nameof(GetDishByIdAsync), new { dishId = createdDish.Id }, createdDish);
@@ -68,10 +64,7 @@ namespace TFGInfotecApi.Controllers
 		/// <param name="dishId">The ID of the dish to update.</param>
 		/// <param name="dish">The updated dish.</param>
 		[HttpPut("{dishId:int}")]
-		public async Task<IActionResult> UpdateDishAsync(
-			[FromRoute][Required] int dishId,
-			[FromBody][BindRequired] Dish dish,
-			CancellationToken cancellationToken)
+		public async Task<IActionResult> UpdateDishAsync([FromRoute][Required] int dishId, [FromBody][BindRequired] Dish dish, CancellationToken cancellationToken)
 		{
 			if (dishId != dish.Id)
 			{
@@ -92,9 +85,7 @@ namespace TFGInfotecApi.Controllers
 		/// </summary>
 		/// <param name="dishId">The ID of the dish to delete.</param>
 		[HttpDelete("{dishId:int}")]
-		public async Task<IActionResult> DeleteDishAsync(
-			[FromRoute][Required] int dishId,
-			CancellationToken cancellationToken)
+		public async Task<IActionResult> DeleteDishAsync([FromRoute][Required] int dishId, CancellationToken cancellationToken)
 		{
 			var result = await _dishManager.DeleteDishAsync(dishId, cancellationToken);
 			if (!result)

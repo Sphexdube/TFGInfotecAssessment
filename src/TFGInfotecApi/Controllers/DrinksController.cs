@@ -40,9 +40,7 @@ namespace TFGInfotecApi.Controllers
 		/// <returns>The name of the dish.</returns>
 		[HttpGet]
 		[Route("product/{productId:int}")]
-		public async Task<ActionResult<Drink>> GetDrinkByIdAsync(
-			[FromRoute][Required] int productId,
-			CancellationToken cancellationToken)
+		public async Task<ActionResult<Drink>> GetDrinkByIdAsync([FromRoute][Required] int productId, CancellationToken cancellationToken)
 		{
 			var result = await _drinkManager.GetDrinkByIdAsync(productId, cancellationToken);
 
@@ -60,9 +58,7 @@ namespace TFGInfotecApi.Controllers
 		/// <param name="request">The drink to create.</param>
 		[HttpPost]
 		[Route("product")]
-		public async Task<IActionResult> CreateDrinkAsync(
-			[FromBody] Drink drink,
-			CancellationToken cancellationToken)
+		public async Task<IActionResult> CreateDrinkAsync([FromBody] Drink drink, CancellationToken cancellationToken)
 		{
 			var createdDrink = await _drinkManager.CreateDrinkAsync(drink, cancellationToken);
 			return CreatedAtAction(nameof(GetDrinkByIdAsync), new { productId = createdDrink.Id }, createdDrink);
@@ -74,10 +70,7 @@ namespace TFGInfotecApi.Controllers
 		/// <param name="productId">The ID of the drink to delete.</param>
 		/// <param name="request">The updated drink.</param>
 		[HttpPut("product/{productId:int}")]
-		public async Task<IActionResult> UpdateDrinkAsync(
-			[FromRoute][Required] int productId,
-			[FromBody][BindRequired] Drink drink,
-			CancellationToken cancellationToken)
+		public async Task<IActionResult> UpdateDrinkAsync( [FromRoute][Required] int productId, [FromBody][BindRequired] Drink drink, CancellationToken cancellationToken)
 		{
 			if (productId != drink.Id)
 			{
@@ -99,9 +92,7 @@ namespace TFGInfotecApi.Controllers
 		/// </summary>
 		/// <param name="productId">The ID of the drink to delete.</param>
 		[HttpDelete("product/{productId:int}")]
-		public async Task<IActionResult> DeleteDrinkAsync(
-			[FromRoute][Required] int productId,
-			CancellationToken cancellationToken)
+		public async Task<IActionResult> DeleteDrinkAsync([FromRoute][Required] int productId, CancellationToken cancellationToken)
 		{
 			var result = await _drinkManager.DeleteDrinkAsync(productId, cancellationToken);
 
