@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TFGInfotecAbstractions.Interfaces;
-using TFGInfotecApi.Managers;
+using TFGInfotecCore.Managers;
 using TFGInfotecInfrastructure.DataSource;
 
 namespace TFGInfotecApi.Extensions
@@ -12,6 +12,7 @@ namespace TFGInfotecApi.Extensions
 			services.AddScoped<IDishManager, DishManager>();
 			services.AddScoped<IDrinkManager, DrinkManager>();
 			services.AddScoped<IUserManager, UserManager>();
+			services.AddScoped<ICustomerManager, CustomerManager>(); 
 		}
 
 		public static void AddDatabaseContext(this IServiceCollection services)

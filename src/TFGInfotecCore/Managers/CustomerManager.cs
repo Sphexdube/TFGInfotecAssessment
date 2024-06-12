@@ -6,7 +6,7 @@ using TFGInfotecInfrastructure.DataSource;
 
 namespace TFGInfotecCore.Managers
 {
-	public class CustomerManager
+	public class CustomerManager : ICustomerManager
 	{
 		private readonly DatabaseContext _dbContext;
 		private readonly ILogger<CustomerManager> _logger;

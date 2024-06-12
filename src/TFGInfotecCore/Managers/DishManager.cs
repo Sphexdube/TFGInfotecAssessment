@@ -4,7 +4,7 @@ using TFGInfotecAbstractions.Interfaces;
 using TFGInfotecAbstractions.Models;
 using TFGInfotecInfrastructure.DataSource;
 
-namespace TFGInfotecApi.Managers
+namespace TFGInfotecCore.Managers
 {
 	public class DishManager : IDishManager
 	{
