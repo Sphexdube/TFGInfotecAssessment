@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using TFGInfotecApi.DataSource;
 using TFGInfotecApi.Extensions;
+using TFGInfotecInfrastructure.DataSource;
 
 var builder = WebApplication.CreateBuilder(args);
 

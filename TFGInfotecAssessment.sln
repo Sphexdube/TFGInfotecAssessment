@@ -3,9 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34723.18
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFGInfotecApi", "src\TFGInfotecApi\TFGInfotecApi.csproj", "{F135931F-E26A-4229-87D0-6841E53C63CD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TFGInfotecApi", "src\TFGInfotecApi\TFGInfotecApi.csproj", "{F135931F-E26A-4229-87D0-6841E53C63CD}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{6D852B70-3D78-4220-8CAF-2245BA06178A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFGInfotecCore", "src\TFGInfotecCore\TFGInfotecCore.csproj", "{B7E2910C-A765-4C24-9825-62CC766C3211}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFGInfotecInfrastructure", "src\TFGInfotecInfrastructure\TFGInfotecInfrastructure.csproj", "{4B6223E3-E63A-4CCD-A9CD-DB7C435213FE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFGInfotecAbstractions", "src\TFGInfotecAbstractions\TFGInfotecAbstractions.csproj", "{3C6421CA-BA11-4C7E-A9B6-ABA1E3CFEB5A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +27,18 @@ Global
 		{6D852B70-3D78-4220-8CAF-2245BA06178A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6D852B70-3D78-4220-8CAF-2245BA06178A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6D852B70-3D78-4220-8CAF-2245BA06178A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7E2910C-A765-4C24-9825-62CC766C3211}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7E2910C-A765-4C24-9825-62CC766C3211}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7E2910C-A765-4C24-9825-62CC766C3211}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7E2910C-A765-4C24-9825-62CC766C3211}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B6223E3-E63A-4CCD-A9CD-DB7C435213FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B6223E3-E63A-4CCD-A9CD-DB7C435213FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B6223E3-E63A-4CCD-A9CD-DB7C435213FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B6223E3-E63A-4CCD-A9CD-DB7C435213FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C6421CA-BA11-4C7E-A9B6-ABA1E3CFEB5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C6421CA-BA11-4C7E-A9B6-ABA1E3CFEB5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C6421CA-BA11-4C7E-A9B6-ABA1E3CFEB5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C6421CA-BA11-4C7E-A9B6-ABA1E3CFEB5A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

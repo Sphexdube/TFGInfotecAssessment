@@ -9,15 +9,24 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
+
+# Copy project files and restore dependencies
 COPY ["src/TFGInfotecApi/TFGInfotecApi.csproj", "src/TFGInfotecApi/"]
-RUN dotnet restore "./src/TFGInfotecApi/TFGInfotecApi.csproj"
+COPY ["src/TFGInfotecAbstractions/TFGInfotecAbstractions.csproj", "src/TFGInfotecAbstractions/"]
+COPY ["src/TFGInfotecCore/TFGInfotecCore.csproj", "src/TFGInfotecCore/"]
+COPY ["src/TFGInfotecInfrastructure/TFGInfotecInfrastructure.csproj", "src/TFGInfotecInfrastructure/"]
+
+RUN dotnet restore "src/TFGInfotecApi/TFGInfotecApi.csproj"
+
+# Copy the entire source code
 COPY . .
+
 WORKDIR "/src/src/TFGInfotecApi"
-RUN dotnet build "./TFGInfotecApi.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "TFGInfotecApi.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./TFGInfotecApi.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "TFGInfotecApi.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app

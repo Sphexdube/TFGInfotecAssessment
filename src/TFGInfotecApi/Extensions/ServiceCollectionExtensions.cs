@@ -1,4 +1,4 @@
-﻿using TFGInfotecApi.Interfaces;
+﻿using TFGInfotecAbstractions.Interfaces;
 using TFGInfotecApi.Managers;
 
 namespace TFGInfotecApi.Extensions

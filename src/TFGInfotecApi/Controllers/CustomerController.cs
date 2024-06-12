@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
-using TFGInfotecApi.Interfaces;
-using TFGInfotecApi.Managers;
+using TFGInfotecAbstractions.Interfaces;
+using TFGInfotecCore.Managers;
 
 namespace TFGInfotecApi.Controllers
 {
