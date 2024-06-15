@@ -1,9 +1,9 @@
 ﻿namespace TFGInfotecApi.Controllers
 {
-	/// <summary>
-	/// Controller for managing account-related actions such as sign up and sign in.
-	/// </summary>
-	[ApiController]
+    /// <summary>
+    /// Controller for managing account-related actions such as sign up and sign in.
+    /// </summary>
+    [ApiController]
 	[Route("api/[controller]"), Authorize]
 	public class AccountController : ControllerBase
 	{

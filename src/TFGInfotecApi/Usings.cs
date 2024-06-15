@@ -8,3 +8,4 @@ global using TFGInfotecApi.Extensions;
 global using TFGInfotecCore.Managers;
 global using TFGInfotecCore.Services;
 global using TFGInfotecInfrastructure.Context;
+global using TFGInfotecInfrastructure.Repositories;

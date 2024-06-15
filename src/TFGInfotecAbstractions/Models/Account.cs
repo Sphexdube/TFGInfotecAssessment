@@ -5,8 +5,10 @@
 		[Required]
 		[EmailAddress(ErrorMessage = "Please enter a valid email")]
 		public string? Email { get; set; }
+
+		[Required]
+		[MinLength(8, ErrorMessage = "Password must be at least of length 8")]
 		public string? Password { get; set; }
-		public string? VerifyCode { get; set; }
 
 		[Required]
 		public Role Role { get; set; }
@@ -14,9 +16,9 @@
 
 	public enum Role
 	{
-		[Display(Name = "Admin")]
-		Admin,
 		[Display(Name = "Customer")]
-		Customer
+		Customer,
+		[Display(Name = "Admin")]
+		Admin
 	}
 }

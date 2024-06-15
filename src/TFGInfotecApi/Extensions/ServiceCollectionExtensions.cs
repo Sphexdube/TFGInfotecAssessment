@@ -1,6 +1,4 @@
-﻿using TFGInfotecInfrastructure.Repositories;
-
-namespace TFGInfotecApi.Extensions
+﻿namespace TFGInfotecApi.Extensions
 {
 	public static class ServiceCollectionExtensions
 	{
