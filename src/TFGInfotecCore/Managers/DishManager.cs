@@ -1,102 +1,42 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using TFGInfotecAbstractions.Interfaces;
-using TFGInfotecAbstractions.Models;
-using TFGInfotecInfrastructure.DataSource;
-
-namespace TFGInfotecCore.Managers
+﻿namespace TFGInfotecCore.Managers
 {
 	public class DishManager : IDishManager
 	{
-		private readonly DatabaseContext _dbContext;
-		private readonly ILogger<DishManager> _logger;
+		private readonly IDishService _dishService;
 
-		public DishManager(DatabaseContext dbContext, ILogger<DishManager> logger)
+		public DishManager(IDishService dishService)
 		{
-			_dbContext = dbContext;
-			_logger = logger;
+			_dishService = dishService;
 		}
 
-		public async Task<Dish> CreateDishAsync(Dish dish, CancellationToken cancellationToken)
+		public Task<Dish> CreateDishAsync(Dish dish)
 		{
-			try
-			{
-				_dbContext.Dishes.Add(dish);
-				await _dbContext.SaveChangesAsync(cancellationToken);
-				return dish;
-			}
-			catch (Exception ex)
-			{
-				_logger.LogError(ex, "An error occurred while creating a dish.");
-				throw;
-			}
+			throw new NotImplementedException();
 		}
 
-		public async Task<bool> DeleteDishAsync(int id, CancellationToken cancellationToken)
+		public async Task<DishReview> AddReviewForDish(DishReview dishReview)
 		{
-			try
-			{
-				var dish = await _dbContext.Dishes.FindAsync(new object[] { id }, cancellationToken);
-				if (dish == null)
-					return false;
-
-				_dbContext.Dishes.Remove(dish);
-				await _dbContext.SaveChangesAsync(cancellationToken);
-				return true;
-			}
-			catch (Exception ex)
-			{
-				_logger.LogError(ex, $"An error occurred while deleting the dish with ID: {id}.");
-				throw;
-			}
+			return await _dishService.AddReviewForDish(dishReview);
 		}
 
-		public async Task<IEnumerable<Dish>> GetAllDishesAsync(CancellationToken cancellationToken)
+		public async Task<Dish> GetDishByIdAsync(int id)
 		{
-			try
-			{
-				return await _dbContext.Dishes.ToListAsync(cancellationToken);
-			}
-			catch (Exception ex)
-			{
-				_logger.LogError(ex, "An error occurred while fetching all dishes.");
-				throw;
-			}
+			return await _dishService.GetDishByIdAsync(id, true);
 		}
 
-		public async Task<Dish?> GetDishByIdAsync(int id, CancellationToken cancellationToken)
+		public async Task<IEnumerable<Dish>> GetDishesAsync()
 		{
-			try
-			{
-				return await _dbContext.Dishes.FindAsync(new object[] { id }, cancellationToken);
-			}
-			catch (Exception ex)
-			{
-				_logger.LogError(ex, $"An error occurred while fetching the dish with ID: {id}.");
-				throw;
-			}
+			return await _dishService.GetAllDishesAsync(true);
 		}
 
-		public async Task<Dish?> UpdateDishAsync(Dish dish, CancellationToken cancellationToken)
+		public async Task<IEnumerable<Dish>> GetDishesAsync(string search)
 		{
-			try
-			{
-				var existingDish = await _dbContext.Dishes.FindAsync(new object[] { dish.Id }, cancellationToken);
-				if (existingDish == null)
-					return null;
+			return await _dishService.SearchDishes(search, true);
+		}
 
-				existingDish.Name = dish.Name;
-				existingDish.Description = dish.Description;
-				existingDish.Rating = dish.Rating;
-
-				await _dbContext.SaveChangesAsync(cancellationToken);
-				return existingDish;
-			}
-			catch (Exception ex)
-			{
-				_logger.LogError(ex, $"An error occurred while updating the dish with ID: {dish.Id}.");
-				throw;
-			}
+		public async Task<List<DishReview>> GetReviewsForDish(int dishId)
+		{
+			return await _dishService.GetReviewsForDish(dishId);
 		}
 	}
 }

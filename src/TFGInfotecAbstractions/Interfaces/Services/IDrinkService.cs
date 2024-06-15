@@ -1,12 +1,12 @@
 ﻿namespace TFGInfotecAbstractions.Interfaces
 {
-	public interface IDrinkManager
+	public interface IDrinkService
 	{
-		Task<Drink> GetDrinkByIdAsync(int id);
+		Task<Drink> GetDrinkByIdAsync(int id, bool menuItems = true);
 
-		Task<IEnumerable<Drink>> GetDrinksAsync();
+		Task<IEnumerable<Drink>> GetAllDrinksAsync(bool menuItems);
 
-		Task<IEnumerable<Drink>> GetDrinksAsync(string search);
+		Task<IEnumerable<Drink>> SearchDrinks(string search, bool menuItems);
 
 		Task<Drink> CreateDrinkAsync(Drink drink);
 

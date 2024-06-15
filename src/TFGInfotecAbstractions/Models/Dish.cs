@@ -1,24 +1,25 @@
-﻿using System.ComponentModel.DataAnnotations;
-using TFGInfotecAbstractions.Interfaces;
-
-namespace TFGInfotecAbstractions.Models
+﻿namespace TFGInfotecAbstractions.Models
 {
-	public class Dish : IMenuItem
+	public class Dish : TrackedEntity
 	{
-		public int Id { get; set; }
+		[Required]
+		public required string Name { get; set; }
 
 		[Required]
-		public string Name { get; set; }
+		public required string Description { get; set; }
 
 		[Required]
-		public string Description { get; set; }
+		[Range(0, 1)]
+		public float Rating { get; set; } = 0;
 
 		[Required]
-		public int Rating { get; set; }
-
+		[Column(TypeName = "Decimal(18,2)")]
 		public double Price { get; set; }
 
-		public string Image { get; set; }
+		public Image Image { get; set; }
+
+		[Required]
+		public bool IsMenuItem { get; set; } = true;
 	}
 }
 
