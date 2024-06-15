@@ -1,94 +1,144 @@
 ﻿namespace TFGInfotecInfrastructure.Repositories
 {
-	public class Repository<T> : IRepository<T> where T : Entity
+	public class Repository<T> : RepositoryBase, IRepository<T> where T : Entity
 	{
-		protected readonly ApplicationDbContext _context;
 		private DbSet<T> entitySet => _context.Set<T>();
 
-		public Repository(ApplicationDbContext context)
+		public Repository(ApplicationDbContext context, ILogger<Repository<T>> logger)
+			: base(context, logger)
 		{
-			_context = context;
 		}
 
 		public async Task<T> Add(T entity)
 		{
-			EntityEntry<T>? addedEntity = await entitySet.AddAsync(entity);
-			await _context.SaveChangesAsync();
-			return addedEntity.Entity;
+			try
+			{
+				EntityEntry<T>? addedEntity = await entitySet.AddAsync(entity);
+				await _context.SaveChangesAsync();
+				return addedEntity.Entity;
+			}
+			catch (DbUpdateException ex)
+			{
+				_logger.LogError(ex.Message, AddErrorMessage);
+				throw new Exception($"{AddErrorMessage} {ex?.InnerException?.Message}");
+			}
 		}
 
 		public async Task<List<T>> AddAll(List<T> entities)
 		{
-			await entitySet.AddRangeAsync(entities);
-			await _context.SaveChangesAsync();
-			return entities.ToList();
+			try
+			{
+				await entitySet.AddRangeAsync(entities);
+				await _context.SaveChangesAsync();
+				return entities.ToList();
+			}
+			catch (DbUpdateException ex)
+			{
+				_logger.LogError(ex, AddAllErrorMessage);
+				throw new Exception($"{AddAllErrorMessage} {ex?.InnerException?.Message}");
+			}
 		}
 
 		public async Task<T> GetByID(int? Id)
 		{
-			T? entity = await entitySet.FindAsync(Id);
-			return entity!;
+			try
+			{
+				T? entity = await entitySet.FindAsync(Id);
+				return entity!;
+			}
+			catch (DbUpdateException ex)
+			{
+				_logger.LogError(ex, GetByIdErrorMessage);
+				throw new Exception($"{GetByIdErrorMessage} {ex?.InnerException?.Message}");
+			}
 		}
 
 		public async Task<List<T>> GetAll()
 		{
-			List<T>? entities = await entitySet.AsNoTracking().ToListAsync();
-			return entities;
+			try
+			{
+				List<T>? entities = await entitySet.AsNoTracking().ToListAsync();
+				return entities;
+			}
+			catch (DbUpdateException ex)
+			{
+				_logger.LogError(ex, GetAllErrorMessage);
+				throw new Exception($"{GetAllErrorMessage} {ex?.InnerException?.Message}");
+			}
 		}
 
 		public async Task<T> Update(T entity)
 		{
-			EntityEntry<T>? updatedEntity;
 			try
 			{
-				updatedEntity = entitySet.Update(entity);
+				EntityEntry<T>? updatedEntity = entitySet.Update(entity);
+				await _context.SaveChangesAsync();
+				return updatedEntity.Entity;
 			}
-			catch (Exception)
+			catch (DbUpdateException ex)
 			{
-				_context.ChangeTracker.Clear();
-				updatedEntity = entitySet.Update(entity);
+				_logger.LogError(ex, UpdateErrorMessage);
+				throw new Exception($"{UpdateErrorMessage} {ex?.InnerException?.Message}");
 			}
-			await _context.SaveChangesAsync();
-			return updatedEntity.Entity;
 		}
 
 		public async Task<bool> Delete(int Id)
 		{
-			T? entity = await GetByID(Id);
-			if (entity == null) return false;
-			EntityEntry<T>? entityDeleted = entitySet.Remove(entity);
-			await _context.SaveChangesAsync();
-			if (await GetByID(Id) == null)
-				return true;
-			return false;
+			try
+			{
+				T? entity = await GetByID(Id);
+				if (entity == null) return false;
+				entitySet.Remove(entity);
+				await _context.SaveChangesAsync();
+				return await GetByID(Id) == null;
+			}
+			catch (DbUpdateException ex)
+			{
+				_logger.LogError(ex, DeleteErrorMessage);
+				throw new Exception($"{DeleteErrorMessage} {ex?.InnerException?.Message}");
+			}
 		}
 
-		public async Task<T> GetOne
-			(Func<IQueryable<T>, IQueryable<T>> filter,
-			Func<IQueryable<T>, IIncludableQueryable<T, object?>>? include = null
-			)
+		public async Task<T> GetOne(
+			Func<IQueryable<T>, IQueryable<T>> filter,
+			Func<IQueryable<T>, IIncludableQueryable<T, object?>>? include = null)
 		{
-			IQueryable<T>? query = entitySet.AsNoTracking();
-			query = filter(query);
-			if (include != null) query = include(query);
-			T? entity = await query.FirstOrDefaultAsync();
-			return entity!;
+			try
+			{
+				IQueryable<T>? query = entitySet.AsNoTracking();
+				query = filter(query);
+				if (include != null) query = include(query);
+				T? entity = await query.FirstOrDefaultAsync();
+				return entity!;
+			}
+			catch (DbUpdateException ex)
+			{
+				_logger.LogError(ex, GetOneErrorMessage);
+				throw new Exception($"{GetOneErrorMessage} {ex?.InnerException?.Message}");
+			}
 		}
 
 		public async Task<List<T>> Get(
 			Func<IQueryable<T>, IQueryable<T>>? filter,
 			Func<IQueryable<T>, IOrderedQueryable<T>>? order = null,
-			Func<IQueryable<T>, IIncludableQueryable<T, object?>>? include = null
-			)
+			Func<IQueryable<T>, IIncludableQueryable<T, object?>>? include = null)
 		{
-			IQueryable<T> query = entitySet.AsNoTracking();
+			try
+			{
+				IQueryable<T> query = entitySet.AsNoTracking();
 
-			query = include?.Invoke(query) ?? query;
-			query = filter?.Invoke(query) ?? query;
-			query = order?.Invoke(query) ?? query;
+				query = include?.Invoke(query) ?? query;
+				query = filter?.Invoke(query) ?? query;
+				query = order?.Invoke(query) ?? query;
 
-			List<T>? entities = await query.ToListAsync();
-			return entities;
+				List<T>? entities = await query.ToListAsync();
+				return entities;
+			}
+			catch (DbUpdateException ex)
+			{
+				_logger.LogError(ex, GetErrorMessage);
+				throw new Exception($"{GetErrorMessage} {ex?.InnerException?.Message}");
+			}
 		}
 	}
 }
