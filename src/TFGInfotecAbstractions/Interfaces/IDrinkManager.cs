@@ -10,8 +10,12 @@
 
 		Task<Drink> CreateDrinkAsync(Drink drink);
 
-		Task<List<DrinkReview>> GetReviewsForDrink(int drinkId);
+		Task<List<DrinkReview>> GetReviewsForDrinkAsync(int drinkId);
 
-		Task<DrinkReview> AddReviewForDrink(DrinkReview drinkReview);
+		Task<DrinkReview> AddReviewForDrinkAsync(DrinkReview drinkReview);
+
+		Task<Drink> UpdateDrinkAsync(Drink drink);
+
+		Task<bool> DeleteDrinkAsync(int drinkId);
 	}
 }

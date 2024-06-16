@@ -1,4 +1,6 @@
-﻿namespace TFGInfotecCore.Managers
+﻿using TFGInfotecAbstractions.Models;
+
+namespace TFGInfotecCore.Managers
 {
 	public class DrinkService : IDrinkService
 	{
@@ -13,9 +15,9 @@
 			_drinkRatingRepository = drinkRatingRepository;
 		}
 
-		public async Task<Drink> CreateDrinkAsync(Drink drink)
+		public Task<Drink> CreateDrinkAsync(Drink drink)
 		{
-			return await _drinkRepository.Update(drink);
+			return _drinkRepository.Add(drink);
 		}
 
 		public async Task<DrinkReview> AddReviewForDrink(DrinkReview drinkReview)
@@ -90,6 +92,16 @@
 
 			List<Drink> drinks = await _drinkRepository.Get(null, null, include);
 			return drinks;
+		}
+
+		public Task<bool> DeleteDrinkAsync(int drinkId)
+		{
+			return _drinkRepository.Delete(drinkId);
+		}
+
+		public Task<Drink> UpdateDrinkAsync(Drink drink)
+		{
+			return _drinkRepository.Update(drink);
 		}
 	}
 }

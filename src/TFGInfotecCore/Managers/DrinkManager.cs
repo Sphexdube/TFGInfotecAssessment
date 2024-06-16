@@ -11,32 +11,42 @@
 
 		public Task<Drink> CreateDrinkAsync(Drink drink)
 		{
-			throw new NotImplementedException();
+			return _drinkService.CreateDrinkAsync(drink);
 		}
 
-		public async Task<DrinkReview> AddReviewForDrink(DrinkReview drinkReview)
+		public Task<DrinkReview> AddReviewForDrinkAsync(DrinkReview drinkReview)
 		{
-			return await _drinkService.AddReviewForDrink(drinkReview);
+			return _drinkService.AddReviewForDrink(drinkReview);
 		}
 
-		public async Task<Drink> GetDrinkByIdAsync(int id)
+		public Task<Drink> GetDrinkByIdAsync(int id)
 		{
-			return await _drinkService.GetDrinkByIdAsync(id, true);
+			return _drinkService.GetDrinkByIdAsync(id, true);
 		}
 
-		public async Task<IEnumerable<Drink>> GetDrinksAsync()
+		public Task<IEnumerable<Drink>> GetDrinksAsync()
 		{
-			return await _drinkService.GetAllDrinksAsync(true);
+			return _drinkService.GetAllDrinksAsync(true);
 		}
 
-		public async Task<IEnumerable<Drink>> GetDrinksAsync(string search)
+		public Task<IEnumerable<Drink>> GetDrinksAsync(string search)
 		{
-			return await _drinkService.SearchDrinks(search, true);
+			return _drinkService.SearchDrinks(search, true);
 		}
 
-		public async Task<List<DrinkReview>> GetReviewsForDrink(int drinkId)
+		public Task<List<DrinkReview>> GetReviewsForDrinkAsync(int drinkId)
 		{
-			return await _drinkService.GetReviewsForDrink(drinkId);
+			return _drinkService.GetReviewsForDrink(drinkId);
+		}
+
+		public Task<Drink> UpdateDrinkAsync(Drink drink)
+		{
+			return _drinkService.UpdateDrinkAsync(drink);
+		}
+
+		public Task<bool> DeleteDrinkAsync(int drinkId)
+		{
+			return _drinkService.DeleteDrinkAsync(drinkId);
 		}
 	}
 }

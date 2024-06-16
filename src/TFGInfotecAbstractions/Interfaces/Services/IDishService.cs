@@ -10,8 +10,10 @@
 
 		Task<Dish> CreateDishAsync(Dish dish);
 
-		Task<List<DishReview>> GetReviewsForDish(int dishId);
+		Task<List<DishReview>> GetReviewsForDishAsync(int dishId);
 
 		Task<DishReview> AddReviewForDish(DishReview dishReview);
+		Task<Dish> UpdateDishAsync(Dish dish);
+		Task<bool> DeleteDishAsync(int dishId);
 	}
 }

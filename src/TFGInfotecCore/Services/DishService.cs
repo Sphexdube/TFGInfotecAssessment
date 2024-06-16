@@ -1,6 +1,4 @@
-﻿using TFGInfotecAbstractions.Models;
-
-namespace TFGInfotecCore.Managers
+﻿namespace TFGInfotecCore.Managers
 {
 	public class DishService : IDishService
 	{
@@ -31,9 +29,14 @@ namespace TFGInfotecCore.Managers
 			return dishReview;
 		}
 
-		public async Task<Dish> CreateDishAsync(Dish dish)
+		public Task<Dish> CreateDishAsync(Dish dish)
 		{
-			return await _dishRepository.Update(dish);
+			return _dishRepository.Add(dish);
+		}
+
+		public Task<bool> DeleteDishAsync(int dishId)
+		{
+			return _dishRepository.Delete(dishId);
 		}
 
 		public async Task<IEnumerable<Dish>> GetAllDishesAsync(bool menuItems)
@@ -62,7 +65,7 @@ namespace TFGInfotecCore.Managers
 			return dish;
 		}
 
-		public async Task<List<DishReview>> GetReviewsForDish(int dishId)
+		public async Task<List<DishReview>> GetReviewsForDishAsync(int dishId)
 		{
 			Expression<Func<DishReview, bool>> filterExpression = e => e.DishId == dishId;
 
@@ -84,6 +87,11 @@ namespace TFGInfotecCore.Managers
 			IQueryable<Dish> filter(IQueryable<Dish> e) => e.Where(filterExpression);
 			List<Dish> dishes = await _dishRepository.Get(filter, null, include);
 			return dishes;
+		}
+
+		public Task<Dish> UpdateDishAsync(Dish dish)
+		{
+			return _dishRepository.Update(dish);
 		}
 
 		private async Task<IEnumerable<Dish>> GetAllDishes()

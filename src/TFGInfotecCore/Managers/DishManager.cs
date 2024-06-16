@@ -11,32 +11,42 @@
 
 		public Task<Dish> CreateDishAsync(Dish dish)
 		{
-			throw new NotImplementedException();
+			return _dishService.CreateDishAsync(dish);
 		}
 
-		public async Task<DishReview> AddReviewForDish(DishReview dishReview)
+		public Task<DishReview> AddReviewForDishAsync(DishReview dishReview)
 		{
-			return await _dishService.AddReviewForDish(dishReview);
+			return _dishService.AddReviewForDish(dishReview);
 		}
 
-		public async Task<Dish> GetDishByIdAsync(int id)
+		public Task<Dish> GetDishByIdAsync(int id)
 		{
-			return await _dishService.GetDishByIdAsync(id, true);
+			return _dishService.GetDishByIdAsync(id, true);
 		}
 
-		public async Task<IEnumerable<Dish>> GetDishesAsync()
+		public Task<IEnumerable<Dish>> GetDishesAsync()
 		{
-			return await _dishService.GetAllDishesAsync(true);
+			return _dishService.GetAllDishesAsync(true);
 		}
 
-		public async Task<IEnumerable<Dish>> GetDishesAsync(string search)
+		public Task<IEnumerable<Dish>> GetDishesAsync(string search)
 		{
-			return await _dishService.SearchDishes(search, true);
+			return _dishService.SearchDishes(search, true);
 		}
 
-		public async Task<List<DishReview>> GetReviewsForDish(int dishId)
+		public Task<List<DishReview>> GetReviewsForDishAsync(int dishId)
 		{
-			return await _dishService.GetReviewsForDish(dishId);
+			return _dishService.GetReviewsForDishAsync(dishId);
+		}
+
+		public Task<Dish> UpdateDishAsync(Dish dish)
+		{
+			return _dishService.UpdateDishAsync(dish);
+		}
+
+		public Task<bool> DeleteDishAsync(int dishId)
+		{
+			return _dishService.DeleteDishAsync(dishId);
 		}
 	}
 }

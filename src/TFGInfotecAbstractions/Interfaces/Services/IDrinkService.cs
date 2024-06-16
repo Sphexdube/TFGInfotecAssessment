@@ -13,5 +13,7 @@
 		Task<List<DrinkReview>> GetReviewsForDrink(int drinkId);
 
 		Task<DrinkReview> AddReviewForDrink(DrinkReview drinkReview);
+		Task<bool> DeleteDrinkAsync(int drinkId);
+		Task<Drink> UpdateDrinkAsync(Drink drink);
 	}
 }
