@@ -62,7 +62,7 @@
 			return dishDeleted ? Ok(dishDeleted) : BadRequest(dishDeleted);
 		}
 
-		[HttpGet(nameof(Reviews))]
+		[HttpGet("Reviews/{dishId}")]
 		public async Task<ActionResult<List<DishReview>>> Reviews(int dishId)
 		{
 			string? userId = GetUserId();
