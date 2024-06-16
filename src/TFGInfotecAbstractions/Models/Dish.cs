@@ -17,9 +17,6 @@
 		public double Price { get; set; }
 
 		public Image Image { get; set; }
-
-		[Required]
-		public bool IsMenuItem { get; set; } = true;
 	}
 }
 

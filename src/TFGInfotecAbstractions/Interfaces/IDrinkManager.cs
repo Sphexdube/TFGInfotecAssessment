@@ -10,7 +10,7 @@
 
 		Task<Drink> CreateDrinkAsync(Drink drink);
 
-		Task<List<DrinkReview>> GetReviewsForDrinkAsync(int drinkId);
+		Task<IEnumerable<DrinkReview>> GetReviewsForDrinkAsync(int drinkId);
 
 		Task<DrinkReview> AddReviewForDrinkAsync(DrinkReview drinkReview);
 

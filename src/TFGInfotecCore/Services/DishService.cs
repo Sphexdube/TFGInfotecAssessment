@@ -39,21 +39,13 @@
 			return _dishRepository.Delete(dishId);
 		}
 
-		public async Task<IEnumerable<Dish>> GetAllDishesAsync(bool menuItems)
+		public async Task<IEnumerable<Dish>> GetAllDishesAsync()
 		{
-			Expression<Func<Dish, bool>> filterExpression = e => e.IsMenuItem;
-
-			IIncludableQueryable<Dish, object> include(IQueryable<Dish> e) =>
-				e.Include(e => e.Image);
-
-			IQueryable<Dish> filter(IQueryable<Dish> e) => e.Where(filterExpression);
-
-			List<Dish> dishes = await _dishRepository.Get(filter, null, include);
-			return dishes;
+			return await _dishRepository.GetAll();
 		}
 
 
-		public async Task<Dish> GetDishByIdAsync(int dishId, bool menuItems = true)
+		public async Task<Dish> GetDishByIdAsync(int dishId)
 		{
 			Expression<Func<Dish, bool>> filterExpression = e => e.Id == dishId;
 
@@ -65,7 +57,7 @@
 			return dish;
 		}
 
-		public async Task<List<DishReview>> GetReviewsForDishAsync(int dishId)
+		public async Task<IEnumerable<DishReview>> GetReviewsForDishAsync(int dishId)
 		{
 			Expression<Func<DishReview, bool>> filterExpression = e => e.DishId == dishId;
 
@@ -76,10 +68,10 @@
 			return dishReview;
 		}
 
-		public async Task<IEnumerable<Dish>> SearchDishes(string search, bool menuItems)
+		public async Task<IEnumerable<Dish>> SearchDishes(string search)
 		{
 			if (string.IsNullOrEmpty(search)) return await GetAllDishes();
-			Expression<Func<Dish, bool>> filterExpression = e => e.Name.Contains(search) && e.IsMenuItem;
+			Expression<Func<Dish, bool>> filterExpression = e => e.Name.Contains(search);
 
 			IIncludableQueryable<Dish, object> include(IQueryable<Dish> e) =>
 				e.Include(e => e.Image);

@@ -36,20 +36,12 @@ namespace TFGInfotecCore.Managers
 			return drinkReview;
 		}
 
-		public async Task<IEnumerable<Drink>> GetAllDrinksAsync(bool menuItems)
+		public async Task<IEnumerable<Drink>> GetAllDrinksAsync()
 		{
-			Expression<Func<Drink, bool>> filterExpression = e => e.IsMenuItem;
-
-			IIncludableQueryable<Drink, object> include(IQueryable<Drink> e) =>
-				e.Include(e => e.Image);
-
-			IQueryable<Drink> filter(IQueryable<Drink> e) => e.Where(filterExpression);
-
-			List<Drink> drinks = await _drinkRepository.Get(filter, null, include);
-			return drinks;
+			return await _drinkRepository.GetAll();
 		}
 
-		public async Task<Drink> GetDrinkByIdAsync(int drinkId, bool menuItems = true)
+		public async Task<Drink> GetDrinkByIdAsync(int drinkId)
 		{
 			Expression<Func<Drink, bool>> filterExpression = e => e.Id == drinkId;
 
@@ -61,7 +53,7 @@ namespace TFGInfotecCore.Managers
 			return drink;
 		}
 
-		public async Task<List<DrinkReview>> GetReviewsForDrink(int drinkId)
+		public async Task<IEnumerable<DrinkReview>> GetReviewsForDrink(int drinkId)
 		{
 			Expression<Func<DrinkReview, bool>> filterExpression = e => e.DrinkId == drinkId;
 
@@ -72,10 +64,10 @@ namespace TFGInfotecCore.Managers
 			return drinkReviews;
 		}
 
-		public async Task<IEnumerable<Drink>> SearchDrinks(string search, bool menuItems)
+		public async Task<IEnumerable<Drink>> SearchDrinks(string search)
 		{
 			if (string.IsNullOrEmpty(search)) return await GetAllDrinks();
-			Expression<Func<Drink, bool>> filterExpression = e => e.Name.Contains(search) && e.IsMenuItem;
+			Expression<Func<Drink, bool>> filterExpression = e => e.Name.Contains(search);
 
 			IIncludableQueryable<Drink, object> include(IQueryable<Drink> e) =>
 				e.Include(e => e.Image);

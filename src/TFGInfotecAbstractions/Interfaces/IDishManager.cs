@@ -10,7 +10,7 @@
 
 		Task<Dish> CreateDishAsync(Dish dish);
 
-		Task<List<DishReview>> GetReviewsForDishAsync(int dishId);
+		Task<IEnumerable<DishReview>> GetReviewsForDishAsync(int dishId);
 
 		Task<DishReview> AddReviewForDishAsync(DishReview dishReview);
 

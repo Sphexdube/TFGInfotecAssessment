@@ -21,20 +21,20 @@
 
 		public Task<Dish> GetDishByIdAsync(int id)
 		{
-			return _dishService.GetDishByIdAsync(id, true);
+			return _dishService.GetDishByIdAsync(id);
 		}
 
 		public Task<IEnumerable<Dish>> GetDishesAsync()
 		{
-			return _dishService.GetAllDishesAsync(true);
+			return _dishService.GetAllDishesAsync();
 		}
 
 		public Task<IEnumerable<Dish>> GetDishesAsync(string search)
 		{
-			return _dishService.SearchDishes(search, true);
+			return _dishService.SearchDishes(search);
 		}
 
-		public Task<List<DishReview>> GetReviewsForDishAsync(int dishId)
+		public Task<IEnumerable<DishReview>> GetReviewsForDishAsync(int dishId)
 		{
 			return _dishService.GetReviewsForDishAsync(dishId);
 		}

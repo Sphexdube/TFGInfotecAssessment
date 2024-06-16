@@ -2,18 +2,20 @@
 {
 	public interface IDishService
 	{
-		Task<Dish> GetDishByIdAsync(int id, bool menuItems = true);
+		Task<Dish> GetDishByIdAsync(int id);
 
-		Task<IEnumerable<Dish>> GetAllDishesAsync(bool menuItems);
+		Task<IEnumerable<Dish>> GetAllDishesAsync();
 
-		Task<IEnumerable<Dish>> SearchDishes(string search, bool menuItems);
+		Task<IEnumerable<Dish>> SearchDishes(string search);
 
 		Task<Dish> CreateDishAsync(Dish dish);
 
-		Task<List<DishReview>> GetReviewsForDishAsync(int dishId);
+		Task<IEnumerable<DishReview>> GetReviewsForDishAsync(int dishId);
 
 		Task<DishReview> AddReviewForDish(DishReview dishReview);
+
 		Task<Dish> UpdateDishAsync(Dish dish);
+
 		Task<bool> DeleteDishAsync(int dishId);
 	}
 }
