@@ -2,7 +2,7 @@
 
 namespace TFGInfotecCore.Services
 {
-	public class CustomerService : ICustomerService
+    public class CustomerService : ICustomerService
 	{
 		private readonly IRepository<Customer> _customerRepository;
 

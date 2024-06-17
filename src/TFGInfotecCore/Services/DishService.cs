@@ -1,6 +1,6 @@
 ﻿namespace TFGInfotecCore.Managers
 {
-	public class DishService : IDishService
+    public class DishService : IDishService
 	{
 		private readonly IRepository<Dish> _dishRepository;
 		private readonly IRepository<DishReview> _dishRatingRepository;
@@ -51,7 +51,7 @@
 
 			IQueryable<Dish> filter(IQueryable<Dish> e) => e.Where(filterExpression);
 			IIncludableQueryable<Dish, object> include(IQueryable<Dish> e) =>
-				e.Include(e => e.Image);
+				e.Include(e => e.Images!);
 
 			Dish dish = await _dishRepository.GetOne(filter, include);
 			return dish;
@@ -74,7 +74,7 @@
 			Expression<Func<Dish, bool>> filterExpression = e => e.Name.Contains(search);
 
 			IIncludableQueryable<Dish, object> include(IQueryable<Dish> e) =>
-				e.Include(e => e.Image);
+				e.Include(e => e.Images!);
 
 			IQueryable<Dish> filter(IQueryable<Dish> e) => e.Where(filterExpression);
 			List<Dish> dishes = await _dishRepository.Get(filter, null, include);
@@ -89,7 +89,7 @@
 		private async Task<IEnumerable<Dish>> GetAllDishes()
 		{
 			IIncludableQueryable<Dish, object> include(IQueryable<Dish> e) =>
-			e.Include(e => e.Image);
+			e.Include(e => e.Images!);
 
 			List<Dish> recipes = await _dishRepository.Get(null, null, include);
 			return recipes;

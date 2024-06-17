@@ -1,7 +1,7 @@
 ﻿namespace TFGInfotecApi.Controllers
 {
-	[ApiController]
-	[Route("api/[controller]"), Authorize]
+    [ApiController]
+	[Route("api/[controller]")]
 	public class DishController : ControllerBase
 	{
 		private readonly IDishManager _dishManager;

@@ -1,4 +1,4 @@
-﻿namespace TFGInfotecAbstractions.Models
+﻿namespace TFGInfotecAbstractions.Models.AccountModels
 {
     public class SignIn
     {

@@ -1,6 +1,6 @@
 ﻿namespace TFGInfotecCore.Managers
 {
-	public class AccountManager : IAccountManager
+    public class AccountManager : IAccountManager
 	{
 		private readonly IUserService<Customer> _userService;
 		private readonly IConfiguration _configuration;

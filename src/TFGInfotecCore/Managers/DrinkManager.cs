@@ -1,6 +1,6 @@
 ﻿namespace TFGInfotecCore.Managers
 {
-	public class DrinkManager : IDrinkManager
+    public class DrinkManager : IDrinkManager
 	{
 		private readonly IDrinkService _drinkService;
 

@@ -1,6 +1,3 @@
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.GetServices();
@@ -8,18 +5,8 @@ builder.Services.AddDatabaseContext();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.AddAuthentication().AddJwtBearer(options => {
-	options.RequireHttpsMetadata = false;
-	options.SaveToken = true;
-	options.TokenValidationParameters = new TokenValidationParameters
-	{
-		ValidateIssuerSigningKey = true,
-		IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:SignInKey"]!)),
-		ValidateIssuer = false,
-		ValidateAudience = false
-	};
-});
+builder.Services.AddSwaggerGenWithOptions();
+builder.Services.AddAuthenticationJwtBearer(builder.Configuration);
 
 var app = builder.Build();
 

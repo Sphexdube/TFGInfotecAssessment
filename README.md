@@ -13,31 +13,46 @@ Welcome to the documentation for the TFGInfotecAssessment REST API! This API is 
 
 ### Done
 
-- **Dish and Drink Management:**
-  - Create, View, List, Update, and Delete dishes and drinks.
-  - Each dish and drink must have a name, description, price, and image.
+- **AccountController Overview (Tested):**
 
-- **Customer Actions:**
-  - Search, View, and Rate dishes & drinks.
+- **Key Features:**
+  - **Sign Up:**
+    - Creates a new user account.
 
-- **User Authentication:**
-  - Users can register and login.
-  - Users have a name, email address, and password.
+  - **Sign In:**
+    - Authenticates a user and generates a JWT token.
+
+- **DishController & DrinkController Overview (Untested):**
+
+- **Key Features for Dishes and Drinks:**
+  - **Search Items:**
+    - Retrieve items (dishes or drinks) based on a search query or get all items if no query is provided.
+  - **Add an Item:**
+    - Create a new item (dish or drink) (requires authentication).
+  - **Get Item Details:**
+    - Retrieve details of a specific item (dish or drink) by ID.
+  - **Update an Item:**
+    - Update an existing item (dish or drink).
+  - **Delete an Item:**
+    - Delete an item (dish or drink) by its ID.
+  - **Get Reviews for an Item:**
+    - Retrieve all reviews for a specific item (dish or drink).
+  - **Add a Review for an Item:**
+    - Add a review for an item (dish or drink) (requires authentication).
+
+- **Security and Functionality (Tested):**
+  - Both controllers ensure secure operations with user authentication and provide comprehensive management of account, dishes and drinks.
+
+- **Performance Optimization (Tested):**
+  - Asynchronous Programming: Ensure your API uses async/await where appropriate to prevent blocking threads
+  - Dependency Injection: Use scoped or transient lifetimes appropriately to avoid long-lived dependencies that may consume resources unnecessarily.
 
 ### Future Work
 
-- **User Management:**
-  - Implement user permissions and authentication support.
-  - Require a logged-in user for all functionality except Registration.
-  - Support password-based authentication.
-
-- **Data Validation:**
-  - Add validation to API data entities.
-  - Implement defenses against brute force attacks.
-
 - **Performance Optimization:**
-  - Improve API performance on existing hardware.
-  - Explore options for further performance enhancements beyond current hardware capabilities.
+  - Caching: Implement caching mechanisms to store frequently accessed data in memory, reducing database calls.
+  - Database Optimization: Indexes, Query Optimization & Connection Pooling.
+  - Docker Container Optimization: Slim Images, Resource Limits & Multi-stage Builds
 
 - **Review Management:**
   - Create a dashboard to view reviews and ratings.
@@ -50,6 +65,11 @@ The TFGInfotecAssessment API uses a database in a containerized environment usin
 
 - **docker-compose.yml**: Configuration for Docker Compose.
 - **migration files**: Files for seeding the database.
+
+The constructor in **ApplicationDbContext** establishes a database connection using provided options. 
+It attempts to verify connectivity and creates the database if connection fails. 
+Additionally, it creates necessary tables if they do not already exist, ensuring the database is ready for application use. 
+Any encountered exceptions are logged to the console for diagnostic purposes.
 
 ## Logging
 

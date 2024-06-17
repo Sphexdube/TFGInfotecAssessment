@@ -1,4 +1,7 @@
-﻿namespace TFGInfotecApi.Extensions
+﻿using Microsoft.IdentityModel.Tokens;
+using System.Text;
+
+namespace TFGInfotecApi.Extensions
 {
 	public static class ServiceCollectionExtensions
 	{
@@ -20,6 +23,51 @@
 			services.AddScoped<IRepository<DrinkReview>, Repository<DrinkReview>>();
 
 			services.AddScoped<IUserService<Customer>, UserService<Customer>>();
+		}
+
+		public static void AddSwaggerGenWithOptions(this IServiceCollection services)
+		{
+			services.AddSwaggerGen(options =>
+			{
+				options.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+				{
+					Name = "Authorization",
+					Type = Microsoft.OpenApi.Models.SecuritySchemeType.Http,
+					Scheme = "Bearer",
+					BearerFormat = "JWT",
+					In = Microsoft.OpenApi.Models.ParameterLocation.Header,
+					Description = "Enter 'Bearer' followed by a space and your JWT token."
+				});
+				options.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
+				{
+					{
+						new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+						{
+							Reference = new Microsoft.OpenApi.Models.OpenApiReference
+							{
+								Type = Microsoft.OpenApi.Models.ReferenceType.SecurityScheme,
+								Id = "Bearer"
+							}
+						},
+						new string[] {}
+					}
+				});
+			});
+		}
+
+		public static void AddAuthenticationJwtBearer(this IServiceCollection services, IConfiguration configuration) 
+		{
+			services.AddAuthentication().AddJwtBearer(options => {
+				options.RequireHttpsMetadata = false;
+				options.SaveToken = true;
+				options.TokenValidationParameters = new TokenValidationParameters
+				{
+					ValidateIssuerSigningKey = true,
+					IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:SignInKey"]!)),
+					ValidateIssuer = false,
+					ValidateAudience = false
+				};
+			});
 		}
 
 		public static void AddDatabaseContext(this IServiceCollection services)

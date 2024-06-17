@@ -1,6 +1,6 @@
 ﻿namespace TFGInfotecCore.Managers
 {
-	public class DishManager : IDishManager
+    public class DishManager : IDishManager
 	{
 		private readonly IDishService _dishService;
 

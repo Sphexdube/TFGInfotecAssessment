@@ -1,8 +1,6 @@
-﻿using TFGInfotecAbstractions.Models;
-
-namespace TFGInfotecCore.Managers
+﻿namespace TFGInfotecCore.Managers
 {
-	public class DrinkService : IDrinkService
+    public class DrinkService : IDrinkService
 	{
 		private readonly IRepository<Drink> _drinkRepository;
 		private readonly IRepository<DrinkReview> _drinkRatingRepository;
@@ -47,7 +45,7 @@ namespace TFGInfotecCore.Managers
 
 			IQueryable<Drink> filter(IQueryable<Drink> e) => e.Where(filterExpression);
 			IIncludableQueryable<Drink, object> include(IQueryable<Drink> e) =>
-				e.Include(e => e.Image);
+				e.Include(e => e.Images!);
 
 			Drink drink = await _drinkRepository.GetOne(filter, include);
 			return drink;
@@ -70,7 +68,7 @@ namespace TFGInfotecCore.Managers
 			Expression<Func<Drink, bool>> filterExpression = e => e.Name.Contains(search);
 
 			IIncludableQueryable<Drink, object> include(IQueryable<Drink> e) =>
-				e.Include(e => e.Image);
+				e.Include(e => e.Images!);
 
 			IQueryable<Drink> filter(IQueryable<Drink> e) => e.Where(filterExpression);
 			List<Drink> drinks = await _drinkRepository.Get(filter, null, include);
@@ -80,7 +78,7 @@ namespace TFGInfotecCore.Managers
 		private async Task<IEnumerable<Drink>> GetAllDrinks()
 		{
 			IIncludableQueryable<Drink, object> include(IQueryable<Drink> e) =>
-				e.Include(e => e.Image);
+				e.Include(e => e.Images!);
 
 			List<Drink> drinks = await _drinkRepository.Get(null, null, include);
 			return drinks;

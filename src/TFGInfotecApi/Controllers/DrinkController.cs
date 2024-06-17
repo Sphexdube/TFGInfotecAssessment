@@ -1,7 +1,7 @@
 ﻿namespace TFGInfotecApi.Controllers
 {
-	[ApiController]
-	[Route("api/[controller]"), Authorize]
+    [ApiController]
+	[Route("api/[controller]")]
 	public class DrinkController : ControllerBase
 	{
 		private readonly IDrinkManager _drinkManager;

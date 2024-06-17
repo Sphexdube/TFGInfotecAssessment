@@ -1,6 +1,6 @@
 ﻿namespace TFGInfotecAbstractions.Interfaces.Services
 {
-	public interface IDishService
+    public interface IDishService
 	{
 		Task<Dish> GetDishByIdAsync(int id);
 

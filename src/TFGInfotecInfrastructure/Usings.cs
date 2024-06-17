@@ -6,4 +6,7 @@ global using Microsoft.EntityFrameworkCore.Storage;
 global using Microsoft.Extensions.Logging;
 global using TFGInfotecAbstractions.Interfaces;
 global using TFGInfotecAbstractions.Models;
+global using TFGInfotecAbstractions.Models.AccountModels;
+global using TFGInfotecAbstractions.Models.DishModels;
+global using TFGInfotecAbstractions.Models.DrinkModels;
 global using TFGInfotecInfrastructure.Context;

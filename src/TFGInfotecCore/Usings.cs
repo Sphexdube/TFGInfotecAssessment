@@ -8,4 +8,7 @@ global using System.Security.Claims;
 global using System.Text;
 global using TFGInfotecAbstractions.Interfaces;
 global using TFGInfotecAbstractions.Interfaces.Services;
-global using TFGInfotecAbstractions.Models;
+global using TFGInfotecAbstractions.Models.AccountModels;
+global using TFGInfotecAbstractions.Models.DishModels;
+global using TFGInfotecAbstractions.Models.DrinkModels;
+

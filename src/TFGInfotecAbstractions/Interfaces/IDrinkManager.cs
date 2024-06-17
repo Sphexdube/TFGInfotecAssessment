@@ -1,6 +1,6 @@
 ﻿namespace TFGInfotecAbstractions.Interfaces
 {
-	public interface IDrinkManager
+    public interface IDrinkManager
 	{
 		Task<Drink> GetDrinkByIdAsync(int id);
 
