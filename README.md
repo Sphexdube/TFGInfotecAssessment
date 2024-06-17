@@ -1,6 +1,6 @@
 # TFGInfotecAssessment REST API
 
-Welcome to the documentation for the TFGInfotecAssessment REST API! This API is designed to facilitate interactions with a cantina, offering various features for managing dishes, drinks, customer actions, and user authentication.
+Welcome to the documentation for the TFGInfotecAssessment REST API! This API facilitates interactions with a cantina, providing various features for managing dishes, drinks, customer actions, and user authentication.
 
 ## Table of Contents
 
@@ -11,20 +11,20 @@ Welcome to the documentation for the TFGInfotecAssessment REST API! This API is 
 
 ## Features
 
-### Done
+### Completed Work
 
 - **AccountController Overview (Tested):**
 
-- **Key Features:**
+#### Key Features:
   - **Sign Up:**
     - Creates a new user account.
-
+  
   - **Sign In:**
     - Authenticates a user and generates a JWT token.
 
 - **DishController & DrinkController Overview (Untested):**
 
-- **Key Features for Dishes and Drinks:**
+#### Key Features for Dishes and Drinks:
   - **Search Items:**
     - Retrieve items (dishes or drinks) based on a search query or get all items if no query is provided.
   - **Add an Item:**
@@ -41,38 +41,36 @@ Welcome to the documentation for the TFGInfotecAssessment REST API! This API is 
     - Add a review for an item (dish or drink) (requires authentication).
 
 - **Security and Functionality (Tested):**
-  - Both controllers ensure secure operations with user authentication and provide comprehensive management of account, dishes and drinks.
+  - Ensures secure operations with user authentication in both controllers.
+  - Provides comprehensive management of accounts, dishes, and drinks.
 
 - **Performance Optimization (Tested):**
-  - Asynchronous Programming: Ensure your API uses async/await where appropriate to prevent blocking threads
-  - Dependency Injection: Use scoped or transient lifetimes appropriately to avoid long-lived dependencies that may consume resources unnecessarily.
+  - Utilizes asynchronous programming to prevent blocking threads.
+  - Implements dependency injection with scoped or transient lifetimes to optimize resource usage.
 
 ### Future Work
 
 - **Performance Optimization:**
-  - Caching: Implement caching mechanisms to store frequently accessed data in memory, reducing database calls.
-  - Database Optimization: Indexes, Query Optimization & Connection Pooling.
-  - Docker Container Optimization: Slim Images, Resource Limits & Multi-stage Builds
+  - Implement caching mechanisms to store frequently accessed data in memory, reducing database calls.
+  - Optimize database with indexes, query optimizations, and connection pooling.
+  - Docker container optimization using slim images, resource limits, and multi-stage builds.
 
 - **Review Management:**
-  - Create a dashboard to view reviews and ratings.
-  - Implement rate-limiting per logged-in customer to prevent abuse.
-  - Allow users to login using OAuth2-based Single Sign-On (SSO) such as Google.
+  - Develop a dashboard for viewing reviews and ratings.
+  - Introduce rate-limiting per logged-in customer to mitigate abuse.
+  - Enable OAuth2-based Single Sign-On (SSO) such as Google for user login.
 
 ## Database
 
-The TFGInfotecAssessment API uses a database in a containerized environment using Docker. Below are the necessary files:
+The TFGInfotecAssessment API utilizes a database within a Docker containerized environment. Below are essential files:
 
-- **docker-compose.yml**: Configuration for Docker Compose.
-- **migration files**: Files for seeding the database.
+- **docker-compose.yml**: Docker Compose configuration.
+- **Migration files**: Database seeding files.
 
-The constructor in **ApplicationDbContext** establishes a database connection using provided options. 
-It attempts to verify connectivity and creates the database if connection fails. 
-Additionally, it creates necessary tables if they do not already exist, ensuring the database is ready for application use. 
-Any encountered exceptions are logged to the console for diagnostic purposes.
+The **ApplicationDbContext** constructor establishes a database connection using provided options. It verifies connectivity and creates the database if connection fails. Additionally, it ensures necessary tables are created if they do not exist, ensuring the database is ready for application use. Exceptions encountered are logged to the console for diagnostic purposes.
 
 ## Logging
 
-The application is configured for logging. While logging to another platform would be preferable, logging to the console is currently implemented.
+The application is configured to log information. Currently, logging to the console is implemented. While logging to another platform would be preferable for production environments.
 
-For more details on each API endpoint and how to interact with them, refer to the API documentation.
+For detailed information on each API endpoint and interaction instructions, refer to the API documentation.
