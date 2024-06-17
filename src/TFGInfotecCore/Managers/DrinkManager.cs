@@ -1,104 +1,52 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using TFGInfotecAbstractions.Interfaces;
-using TFGInfotecAbstractions.Models;
-using TFGInfotecInfrastructure.DataSource;
-
-namespace TFGInfotecCore.Managers
+﻿namespace TFGInfotecCore.Managers
 {
-	/// <inheritdoc cref="IDrinkManager"/>
-	public class DrinkManager : IDrinkManager
+    public class DrinkManager : IDrinkManager
 	{
-		private readonly DatabaseContext _dbContext;
-		private readonly ILogger<DrinkManager> _logger;
+		private readonly IDrinkService _drinkService;
 
-		public DrinkManager(DatabaseContext dbContext, ILogger<DrinkManager> logger)
+		public DrinkManager(IDrinkService drinkService)
 		{
-			_dbContext = dbContext;
-			_logger = logger;
+			_drinkService = drinkService;
 		}
 
-		public async Task<Drink> CreateDrinkAsync(Drink drink, CancellationToken cancellationToken)
+		public Task<Drink> CreateDrinkAsync(Drink drink)
 		{
-			try
-			{
-				_dbContext.Drinks.Add(drink);
-				await _dbContext.SaveChangesAsync(cancellationToken);
-				return drink;
-			}
-			catch (Exception ex)
-			{
-				_logger.LogError(ex, "An error occurred while creating a drink.");
-				throw;
-			}
+			return _drinkService.CreateDrinkAsync(drink);
 		}
 
-		public async Task<bool> DeleteDrinkAsync(int id, CancellationToken cancellationToken)
+		public Task<DrinkReview> AddReviewForDrinkAsync(DrinkReview drinkReview)
 		{
-			try
-			{
-				var drink = await _dbContext.Drinks.FindAsync(new object[] { id }, cancellationToken);
-				if (drink == null)
-					return false;
-
-				_dbContext.Drinks.Remove(drink);
-				await _dbContext.SaveChangesAsync(cancellationToken);
-				return true;
-			}
-			catch (Exception ex)
-			{
-				_logger.LogError(ex, $"An error occurred while deleting the drink with ID: {id}.");
-				throw;
-			}
+			return _drinkService.AddReviewForDrink(drinkReview);
 		}
 
-		public async Task<IEnumerable<Drink>> GetAllDrinksAsync(CancellationToken cancellationToken)
+		public Task<Drink> GetDrinkByIdAsync(int id)
 		{
-			try
-			{
-				return await _dbContext.Drinks.ToListAsync(cancellationToken);
-			}
-			catch (Exception ex)
-			{
-				_logger.LogError(ex, "An error occurred while fetching all drinks.");
-				throw;
-			}
+			return _drinkService.GetDrinkByIdAsync(id);
 		}
 
-		public async Task<Drink?> GetDrinkByIdAsync(int id, CancellationToken cancellationToken)
+		public Task<IEnumerable<Drink>> GetDrinksAsync()
 		{
-			try
-			{
-				return await _dbContext.Drinks.FindAsync(new object[] { id }, cancellationToken);
-			}
-			catch (Exception ex)
-			{
-				_logger.LogError(ex, $"An error occurred while fetching the drink with ID: {id}.");
-				throw;
-			}
+			return _drinkService.GetAllDrinksAsync();
 		}
 
-		public async Task<Drink?> UpdateDrinkAsync(Drink drink, CancellationToken cancellationToken)
+		public Task<IEnumerable<Drink>> GetDrinksAsync(string search)
 		{
-			try
-			{
-				var existingDrink = await _dbContext.Drinks.FindAsync(new object[] { drink.Id }, cancellationToken);
-				if (existingDrink == null)
-					return null;
+			return _drinkService.SearchDrinks(search);
+		}
 
-				existingDrink.Name = drink.Name;
-				existingDrink.Description = drink.Description;
-				existingDrink.Rating = drink.Rating;
+		public Task<IEnumerable<DrinkReview>> GetReviewsForDrinkAsync(int drinkId)
+		{
+			return _drinkService.GetReviewsForDrink(drinkId);
+		}
 
-				await _dbContext.SaveChangesAsync(cancellationToken);
-				return existingDrink;
-			}
-			catch (Exception ex)
-			{
-				_logger.LogError(ex, $"An error occurred while updating the drink with ID: {drink.Id}.");
-				throw;
-			}
+		public Task<Drink> UpdateDrinkAsync(Drink drink)
+		{
+			return _drinkService.UpdateDrinkAsync(drink);
+		}
+
+		public Task<bool> DeleteDrinkAsync(int drinkId)
+		{
+			return _drinkService.DeleteDrinkAsync(drinkId);
 		}
 	}
 }
-
