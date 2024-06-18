@@ -1,8 +1,6 @@
-﻿using System.Linq.Expressions;
-
-namespace TFGInfotecCore.Services
+﻿namespace TFGInfotecCore.Services
 {
-    public class CustomerService : ICustomerService
+	public class CustomerService : ICustomerService
 	{
 		private readonly IRepository<Customer> _customerRepository;
 

@@ -1,7 +1,4 @@
-﻿using Microsoft.IdentityModel.Tokens;
-using System.Text;
-
-namespace TFGInfotecApi.Extensions
+﻿namespace TFGInfotecApi.Extensions
 {
 	public static class ServiceCollectionExtensions
 	{

@@ -1,7 +1,9 @@
 global using Microsoft.AspNetCore.Authorization;
 global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.EntityFrameworkCore;
+global using Microsoft.IdentityModel.Tokens;
 global using System.Security.Claims;
+global using System.Text;
 global using TFGInfotecAbstractions.Interfaces;
 global using TFGInfotecAbstractions.Interfaces.Services;
 global using TFGInfotecAbstractions.Models.AccountModels;

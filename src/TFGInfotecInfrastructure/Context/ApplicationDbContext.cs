@@ -1,6 +1,6 @@
 ﻿namespace TFGInfotecInfrastructure.Context
 {
-	public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : DbContext
 	{
 		public DbSet<User>? User { get; set; }
 		public DbSet<Drink>? Drink { get; set; }
