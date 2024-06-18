@@ -16,10 +16,10 @@ Welcome to the documentation for the TFGInfotecAssessment REST API! This API fac
 - **AccountController Overview (Tested):**
 
 #### Key Features:
-  - **Sign Up:**
+  - **Sign Up: (Tested)**
     - Creates a new user account.
   
-  - **Sign In:**
+  - **Sign In: (Tested)**
     - Authenticates a user and generates a JWT token.
 
 - **DishController & DrinkController Overview (Tested Partially):**
