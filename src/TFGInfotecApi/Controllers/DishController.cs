@@ -1,17 +1,19 @@
 ﻿namespace TFGInfotecApi.Controllers
 {
-    [ApiController]
-	[Route("api/[controller]")]
+	[ApiController]
+	[Route("api/[controller]"), Authorize]
 	public class DishController : ControllerBase
 	{
 		private readonly IDishManager _dishManager;
 
+		/// <inheritdoc />
 		public DishController(IDishManager dishManager)
 		{
 			_dishManager = dishManager;
 		}
 
-		[HttpGet(nameof(Search))]
+		/// <inheritdoc cref="IDishManager.GetDishesAsync(string)" />
+		[HttpGet(nameof(Search)), Authorize]
 		public async Task<ActionResult<IEnumerable<Dish>>> Search(string? search)
 		{
 			string? userId = GetUserId();
@@ -22,6 +24,7 @@
 				: Ok(await _dishManager.GetDishesAsync(search));
 		}
 
+		/// <inheritdoc cref="IDishManager.CreateDishAsync" />
 		[HttpPost(nameof(AddDish)), Authorize]
 		public async Task<ActionResult<Dish>> AddDish(Dish dish)
 		{
@@ -31,7 +34,8 @@
 			return Ok(await _dishManager.CreateDishAsync(dish));
 		}
 
-		[HttpGet(nameof(dishId))]
+		/// <inheritdoc cref="IDishManager.GetDishByIdAsync" />
+		[HttpGet("{dishId}"), Authorize]
 		public async Task<ActionResult<Dish>> Details(int dishId)
 		{
 			string? userId = GetUserId();
@@ -40,7 +44,8 @@
 			return Ok(await _dishManager.GetDishByIdAsync(dishId));
 		}
 
-		[HttpPatch(nameof(Update))]
+		/// <inheritdoc cref="IDishManager.UpdateDishAsync" />
+		[HttpPatch(nameof(Update)), Authorize]
 		public async Task<ActionResult<Dish>> Update(Dish dish)
 		{
 			string? userId = GetUserId();
@@ -49,7 +54,8 @@
 			return Ok(await _dishManager.UpdateDishAsync(dish));
 		}
 
-		[HttpDelete(nameof(Delete))]
+		/// <inheritdoc cref="IDishManager.DeleteDishAsync" />
+		[HttpDelete(nameof(Delete)), Authorize]
 		public async Task<ActionResult<bool>> Delete(int dishId)
 		{
 			string? userId = GetUserId();
@@ -62,7 +68,8 @@
 			return dishDeleted ? Ok(dishDeleted) : BadRequest(dishDeleted);
 		}
 
-		[HttpGet("Reviews/{dishId}")]
+		/// <inheritdoc cref="IDishManager.GetReviewsForDishAsync" />
+		[HttpGet("Reviews/{dishId}"), Authorize]
 		public async Task<ActionResult<List<DishReview>>> Reviews(int dishId)
 		{
 			string? userId = GetUserId();
@@ -71,6 +78,7 @@
 			return Ok(await _dishManager.GetReviewsForDishAsync(dishId));
 		}
 
+		/// <inheritdoc cref="IDishManager.AddReviewForDishAsync" />
 		[HttpPost(nameof(Review)), Authorize]
 		public async Task<ActionResult<DishReview>> Review(DishReview dishReview)
 		{

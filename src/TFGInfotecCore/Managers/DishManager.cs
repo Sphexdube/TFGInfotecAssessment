@@ -1,4 +1,5 @@
-﻿namespace TFGInfotecCore.Managers
+﻿
+namespace TFGInfotecCore.Managers
 {
     public class DishManager : IDishManager
 	{
