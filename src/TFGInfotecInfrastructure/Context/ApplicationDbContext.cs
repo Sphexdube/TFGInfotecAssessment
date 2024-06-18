@@ -3,12 +3,13 @@
 	public class ApplicationDbContext : DbContext
 	{
 		public DbSet<User>? User { get; set; }
-		public DbSet<Drink>? Drinks { get; set; }
-		public DbSet<Dish>? Dishes { get; set; }
+		public DbSet<Drink>? Drink { get; set; }
+		public DbSet<Dish>? Dish { get; set; }
 		public DbSet<Account>? Account { get; set; }
 		public DbSet<Customer>? Customer { get; set; }
-
 		public DbSet<Image>? Image { get; set; }
+		public DbSet<DrinkReview>? DrinkReview { get; set; }
+		public DbSet<DishReview>? DishReview { get; set; }
 
 		public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
 			: base(options)
@@ -19,7 +20,7 @@
 				if (databaseCreator != null)
 				{
 					if (!databaseCreator.CanConnect()) databaseCreator.Create();
-					if (!databaseCreator.CanConnect()) databaseCreator.CreateTables();
+					if (!databaseCreator.HasTables()) databaseCreator.CreateTables();
 				}
 			}
 			catch (Exception ex)
@@ -48,20 +49,20 @@
 				.IsUnique();
 
 			modelBuilder.Entity<Account>()
-			.HasIndex(e => e.Email)
-			.IsUnique();
+				.HasIndex(e => e.Email)
+				.IsUnique();
 
 			modelBuilder.Entity<Drink>()
-			.HasMany(r => r.Images)
-			.WithOne(i => i.Drink)
-			.HasForeignKey(i => i.ItemId)
-			.OnDelete(DeleteBehavior.Cascade);
+				.HasMany(r => r.Images)
+				.WithOne(i => i.Drink)
+				.HasForeignKey(i => i.ItemId)
+				.OnDelete(DeleteBehavior.Cascade);
 
 			modelBuilder.Entity<Dish>()
-			.HasMany(r => r.Images)
-			.WithOne(i => i.Dish)
-			.HasForeignKey(i => i.ItemId)
-			.OnDelete(DeleteBehavior.Cascade);
+				.HasMany(r => r.Images)
+				.WithOne(i => i.Dish)
+				.HasForeignKey(i => i.ItemId)
+				.OnDelete(DeleteBehavior.Cascade);
 		}
 	}
 }

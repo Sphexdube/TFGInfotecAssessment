@@ -70,6 +70,15 @@ namespace TFGInfotecApi.Extensions
 			});
 		}
 
+		public static void ApplyMigrations(this IApplicationBuilder app)
+		{
+			using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+			{
+				var context = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
+				context.Database.Migrate();
+			}
+		}
+
 		public static void AddDatabaseContext(this IServiceCollection services)
 		{
 			var dbHost = Environment.GetEnvironmentVariable("DB_HOST");

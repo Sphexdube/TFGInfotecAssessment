@@ -2,6 +2,8 @@
 {
     public class DishManager : IDishManager
 	{
+		// ToDo: Use AutoMapper, e.g., map dishRequest to dish DB context models and avoid exposing all the unnecessary properties.
+
 		private readonly IDishService _dishService;
 
 		public DishManager(IDishService dishService)

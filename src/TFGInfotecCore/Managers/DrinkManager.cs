@@ -2,6 +2,8 @@
 {
     public class DrinkManager : IDrinkManager
 	{
+		// ToDo: Use AutoMapper, e.g., map drinkRequest to drink DB context models and avoid exposing all the unnecessary properties.
+
 		private readonly IDrinkService _drinkService;
 
 		public DrinkManager(IDrinkService drinkService)

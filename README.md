@@ -22,22 +22,22 @@ Welcome to the documentation for the TFGInfotecAssessment REST API! This API fac
   - **Sign In:**
     - Authenticates a user and generates a JWT token.
 
-- **DishController & DrinkController Overview (Untested):**
+- **DishController & DrinkController Overview (Tested Partially):**
 
 #### Key Features for Dishes and Drinks:
-  - **Search Items:**
+  - **Search Items: (Tested)**
     - Retrieve items (dishes or drinks) based on a search query or get all items if no query is provided.
-  - **Add an Item:**
+  - **Add an Item: (Tested)**
     - Create a new item (dish or drink) (requires authentication).
-  - **Get Item Details:**
+  - **Get Item Details: (Tested)**
     - Retrieve details of a specific item (dish or drink) by ID.
-  - **Update an Item:**
+  - **Update an Item: (Tested)**
     - Update an existing item (dish or drink).
-  - **Delete an Item:**
+  - **Delete an Item: (Tested)**
     - Delete an item (dish or drink) by its ID.
-  - **Get Reviews for an Item:**
+  - **Get Reviews for an Item: (Untested)**
     - Retrieve all reviews for a specific item (dish or drink).
-  - **Add a Review for an Item:**
+  - **Add a Review for an Item: (Untested)**
     - Add a review for an item (dish or drink) (requires authentication).
 
 - **Security and Functionality (Tested):**
